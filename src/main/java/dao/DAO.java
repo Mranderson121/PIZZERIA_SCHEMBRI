@@ -43,6 +43,40 @@ public class DAO {
 
 	}
 
+	public static void aggiornaPizza(long idPizza, String[] ingredientiNew, long idImpastoNew, String newNomePizza) {
+		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+		entityManager.getTransaction().begin();
+
+		Pizza pizza = getPizzaById(idPizza);
+		pizza.setNome(newNomePizza);
+
+		Impasto impasto = entityManager.find(Impasto.class, idImpastoNew);
+		pizza.setImpasto(impasto);
+
+		List<Ingrediente> newListaIngredienti = new ArrayList<Ingrediente>();
+		for (String ingr : ingredientiNew) {
+			Ingrediente ingrediente = entityManager.find(Ingrediente.class, Long.parseLong(ingr));
+
+			newListaIngredienti.add(ingrediente);
+		}
+
+		pizza.setIngredienti(newListaIngredienti);
+
+		entityManager.getTransaction().commit();
+		entityManager.close();
+	}
+
+	public static void rimuoviPizza(long idPizza) {
+		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+		entityManager.getTransaction().begin();
+
+		Pizza pizza = entityManager.find(Pizza.class, idPizza);
+		entityManager.remove(pizza);
+
+		entityManager.getTransaction().commit();
+		entityManager.close();
+	}
+
 	public static Utente getUtente(String username, String password) {
 		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
 		List<Utente> listaResult = new ArrayList<>();
@@ -71,6 +105,11 @@ public class DAO {
 	public static Utente getUtenteById(long key) {
 		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
 		return entityManager.find(Utente.class, key);
+	}
+
+	public static Pizza getPizzaById(long id) {
+		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+		return entityManager.find(Pizza.class, id);
 	}
 
 }

@@ -1,6 +1,6 @@
 package model;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,20 +14,20 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "utente")
 public class Utente {
-	
+
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+
 	@Column(name = "username")
 	private String username;
-	
+
 	@Column(name = "password")
 	private String password;
-	
+
 	@OneToMany(mappedBy = "utente", fetch = FetchType.EAGER)
-	private List<Pizza> pizze;
+	private Set<Pizza> pizze;
 
 	public long getId() {
 		return id;
@@ -53,14 +53,14 @@ public class Utente {
 		this.password = password;
 	}
 
-	public List<Pizza> getPizze() {
+	public Set<Pizza> getPizze() {
 		return pizze;
 	}
 
-	public void setPizze(List<Pizza> pizze) {
+	public void setPizze(Set<Pizza> pizze) {
 		this.pizze = pizze;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Utente ID: " + id + ", Username: " + username + ", Pizze: " + pizze;

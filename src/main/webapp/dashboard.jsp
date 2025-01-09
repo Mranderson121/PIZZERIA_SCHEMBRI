@@ -1,5 +1,5 @@
 <%@page import="model.*"%>
-<%@page import="java.util.List"%>
+<%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -8,19 +8,19 @@
 <meta charset="UTF-8">
 <title>Pizza Order Dashboard</title>
 </head>
-	<%
-		Utente utente = (Utente) session.getAttribute("utente");
-		List<Ingrediente> ingredienti = (List<Ingrediente>) request.getAttribute("ingredienti");
-		List<Impasto> impasti = (List<Impasto>) request.getAttribute("impasti");
-	%>
+<%
+Utente utente = (Utente) session.getAttribute("utente");
+List<Ingrediente> ingredienti = (List<Ingrediente>) request.getAttribute("ingredienti");
+List<Impasto> impasti = (List<Impasto>) request.getAttribute("impasti");
+%>
 <body>
 	<h1>
 		Benvenuto
-		<%=utente.getUsername() %>
+		<%=utente.getUsername()%>
 	</h1>
 
 	<form action="./DashboardServlet" method="post">
-		<div style="display: flex; padding: 10px; ">
+		<div style="display: flex; padding: 10px;">
 			<table border="1" style="margin-right: 20px;">
 				<tr>
 					<th>Seleziona</th>
@@ -28,7 +28,7 @@
 				</tr>
 
 				<%
-					for (Ingrediente ingr : ingredienti) {
+				for (Ingrediente ingr : ingredienti) {
 				%>
 
 				<tr>
@@ -37,7 +37,7 @@
 				</tr>
 
 				<%
-					}
+				}
 				%>
 			</table>
 
@@ -48,7 +48,7 @@
 				</tr>
 
 				<%
-					for (Impasto imp : impasti) {
+				for (Impasto imp : impasti) {
 				%>
 
 				<tr>
@@ -59,18 +59,20 @@
 				</tr>
 
 				<%
-					}
+				}
 				%>
-			</table><br /><br />
-			</div>
+			</table>
+			<br />
+			<br />
+		</div>
 
-			<div style="margin-top: 20px;">
+		<div style="margin-top: 20px;">
 			<h2>Inserisci nome pizza da realizzare</h2>
-			<input type="text" name="nomePizza" required="required"><br /><br />
-			<input type="submit" value="Crea">
-			</div>
+			<input type="text" name="nomePizza" required="required"><br />
+			<br /> <input type="submit" value="Crea">
+		</div>
 	</form>
-	
+
 
 	<div style="margin-top: 40px;">
 
@@ -82,19 +84,28 @@
 				<th>Ingredienti</th>
 				<th>Azioni</th>
 			</tr>
-				<%
-					for (Pizza pizza : utente.getPizze()) {
-				%>
+			<%
+			for (Pizza pizza : utente.getPizze()) {
+			%>
 
 			<tr>
-				<td><%=pizza.getNome() %></td>
-				<td><%=pizza.getImpasto().getNome() %></td>
-				<td><%=pizza.stampaIngredienti() %></td>
-				<td></td>
+				<td><%=pizza.getNome()%></td>
+				<td><%=pizza.getImpasto().getNome()%></td>
+				<td><%=pizza.stampaIngredienti()%></td>
+				<td>
+					<form action="./UpdateServlet" method="post" style="display: inline-block;">
+						<input type="hidden" name="aggiornaPizza" value="<%=pizza.getId() %>">
+						<input type="submit" value="Update">
+					</form>
+					<form action="./DashboardServlet" method="post" style="display: inline-block;">
+						<input type="hidden" name="cancellaPizza" value="<%=pizza.getId() %>">
+						<input type="submit" value="Delete">
+					</form>
+				</td>
 			</tr>
-			
+
 			<%
-					}
+			}
 			%>
 		</table>
 	</div>

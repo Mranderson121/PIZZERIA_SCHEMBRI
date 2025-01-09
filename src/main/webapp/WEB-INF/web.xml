@@ -29,4 +29,10 @@
     <servlet-name>dashboard</servlet-name>
     <url-pattern>/dashboard</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UpdateServlet</display-name>
+    <servlet-name>UpdateServlet</servlet-name>
+    <servlet-class>servlet.UpdateServlet</servlet-class>
+  </servlet>
 </web-app>

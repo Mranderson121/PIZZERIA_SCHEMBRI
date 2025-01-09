@@ -8,7 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import dao.DAO;
 import model.Impasto;
@@ -31,8 +30,8 @@ public class DashboardServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		Utente utente = (Utente) session.getAttribute("utente");
+
+		Utente utente = (Utente) request.getSession().getAttribute("utente");
 
 		String nomePizza = request.getParameter("nomePizza");
 
@@ -42,9 +41,14 @@ public class DashboardServlet extends HttpServlet {
 		if (ingredientiSelezionati != null && impastoSelezionato != null) {
 			DAO.creaPizza(utente.getId(), nomePizza, Long.parseLong(impastoSelezionato), ingredientiSelezionati);
 		}
+		
+		String pizzaDelete = request.getParameter("cancellaPizza");
+		if(pizzaDelete != null) {
+			DAO.rimuoviPizza(Long.parseLong(pizzaDelete));
+		}
 
 		utente = DAO.getUtenteById(utente.getId());
-		session.setAttribute("utente", utente);
+		request.getSession().setAttribute("utente", utente);
 
 		List<Ingrediente> ingredienti = DAO.getIngredienti();
 		request.setAttribute("ingredienti", ingredienti);
