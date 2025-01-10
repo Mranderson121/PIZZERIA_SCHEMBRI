@@ -39,6 +39,7 @@ public class DAO {
 		entityManager.getTransaction().commit();
 		System.out.println("Pizza " + nomePizza + " creata con Successo");
 
+		entityManager.refresh(utente);
 		entityManager.close();
 
 	}
@@ -48,21 +49,34 @@ public class DAO {
 		entityManager.getTransaction().begin();
 
 		Pizza pizza = getPizzaById(idPizza);
-		pizza.setNome(newNomePizza);
-
-		Impasto impasto = entityManager.find(Impasto.class, idImpastoNew);
-		pizza.setImpasto(impasto);
-
-		List<Ingrediente> newListaIngredienti = new ArrayList<Ingrediente>();
+		Utente utente = pizza.getUtente();
+		//Impasto impasto = entityManager.find(Impasto.class, idImpastoNew);
+		/*List<Ingrediente> newListaIngredienti = new ArrayList<Ingrediente>();
 		for (String ingr : ingredientiNew) {
 			Ingrediente ingrediente = entityManager.find(Ingrediente.class, Long.parseLong(ingr));
 
 			newListaIngredienti.add(ingrediente);
-		}
+		} */
+		
+		rimuoviPizza(pizza.getId());
+		
+		creaPizza(utente.getId(), newNomePizza, idImpastoNew, ingredientiNew);
+		
+	/*	pizza.setNome(newNomePizza);
+		pizza.setImpasto(impasto);
+		
+
+		
 
 		pizza.setIngredienti(newListaIngredienti);
-
+		
+		
+		*/
+		
 		entityManager.getTransaction().commit();
+		
+		//utente = entityManager.find(Utente.class, utente.getId());
+		//entityManager.refresh(utente);
 		entityManager.close();
 	}
 
@@ -71,9 +85,16 @@ public class DAO {
 		entityManager.getTransaction().begin();
 
 		Pizza pizza = entityManager.find(Pizza.class, idPizza);
+		
+		Utente utente = pizza.getUtente();
+		
+		
+		
 		entityManager.remove(pizza);
-
+		
+		
 		entityManager.getTransaction().commit();
+		entityManager.refresh(utente);
 		entityManager.close();
 	}
 

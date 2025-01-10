@@ -8,9 +8,13 @@
 	<packaging>war</packaging>
 	<dependencies>
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>5.6.15.Final</version>
+    		<groupId>org.eclipse.persistence</groupId>
+    		<artifactId>eclipselink</artifactId>
+    		<version>2.7.7</version>
 		</dependency>
 	</dependencies>
+	<properties>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+</properties>
 </project>
