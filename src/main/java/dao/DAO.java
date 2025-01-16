@@ -108,6 +108,48 @@ public class DAO {
 		return listaResult.isEmpty() ? null : listaResult.get(0);
 	}
 
+	public static void rimuoviUtente(long id) {
+		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+        entityManager.getTransaction().begin();
+        Utente utente = entityManager.find(Utente.class, id);
+
+            
+        if (utente != null) {
+        	entityManager.remove(utente);
+        }
+
+            entityManager.getTransaction().commit(); // Commettiamo la transazione
+        
+    }
+	
+	public static void rimuoviIngrediente(long id) {
+		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+        entityManager.getTransaction().begin();
+        Ingrediente ingrediente = entityManager.find(Ingrediente.class, id);
+
+            
+        if (ingrediente != null) {
+        	entityManager.remove(ingrediente);
+        }
+
+            entityManager.getTransaction().commit(); // Commettiamo la transazione
+        
+    }
+	
+	public static void rimuoviImpasto(long id) {
+		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+        entityManager.getTransaction().begin();
+        Impasto impasto = entityManager.find(Impasto.class, id);
+
+            
+        if (impasto != null) {
+        	entityManager.remove(impasto);
+        }
+
+            entityManager.getTransaction().commit(); // Commettiamo la transazione
+        
+    }
+	
 	public static List<Ingrediente> getIngredienti() {
 		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
 		String query = "select i from Ingrediente i";
@@ -122,6 +164,13 @@ public class DAO {
 		List<Impasto> impasti = (List<Impasto>) entityManager.createQuery(query, Impasto.class).getResultList();
 		return impasti;
 	}
+	
+	public static List<Utente> getAllUtenti() {
+		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+		String query = "select u from Utente u";
+		List<Utente> utenti = (List<Utente>) entityManager.createQuery(query, Utente.class).getResultList();
+		return utenti;
+	}
 
 	public static Utente getUtenteById(long key) {
 		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
@@ -132,5 +181,78 @@ public class DAO {
 		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
 		return entityManager.find(Pizza.class, id);
 	}
+	
+	public static Ingrediente getIngredienteById(long id) {
+		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+		return entityManager.find(Ingrediente.class, id);
+	}
+	
+	public static Impasto getImpastoById(long id) {
+		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+		return entityManager.find(Impasto.class, id);
+	}
 
+	public static void aggiungiUtente(Utente utente) {
+		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+		entityManager.getTransaction().begin();
+		
+		entityManager.persist(utente);
+
+		entityManager.getTransaction().commit();
+		entityManager.close();
+	}
+	
+	public static void aggiungiIngrediente(Ingrediente ingrediente) {
+		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+		entityManager.getTransaction().begin();
+		
+		entityManager.persist(ingrediente);
+
+		entityManager.getTransaction().commit();
+		entityManager.close();
+	}
+	
+	public static void aggiungiImpasto(Impasto impasto) {
+		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+		entityManager.getTransaction().begin();
+		
+		entityManager.persist(impasto);
+
+		entityManager.getTransaction().commit();
+		entityManager.close();
+	}
+	
+	public static void aggiornaUtente(Utente updateUtente) {
+		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+		entityManager.getTransaction().begin();
+		
+		Utente oldUtente = entityManager.find(Utente.class, updateUtente.getId());
+		oldUtente.setUsername(updateUtente.getUsername());
+		oldUtente.setPassword(updateUtente.getPassword());
+
+		entityManager.getTransaction().commit();
+		entityManager.close();
+	}
+	
+	public static void aggiornaIngrediente(Ingrediente udpateIngrediente) {
+		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+		entityManager.getTransaction().begin();
+		
+		Ingrediente oldIngrediente = entityManager.find(Ingrediente.class, udpateIngrediente.getId());
+		oldIngrediente.setNome(udpateIngrediente.getNome());
+
+		entityManager.getTransaction().commit();
+		entityManager.close();
+	}
+	
+	public static void aggiornaImpasto(Impasto updateImpasto) {
+		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+		entityManager.getTransaction().begin();
+		
+		Impasto oldImpasto = entityManager.find(Impasto.class, updateImpasto.getId());
+		oldImpasto.setNome(updateImpasto.getNome());
+
+		entityManager.getTransaction().commit();
+		entityManager.close();
+	}
 }

@@ -9,7 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
+@XmlRootElement(name = "ingrediente")
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @Table(name = "ingrediente")
 public class Ingrediente {
@@ -22,6 +28,7 @@ public class Ingrediente {
 	@Column(name = "nome")
 	private String nome;
 
+	@XmlTransient
 	@ManyToMany(mappedBy = "ingredienti")
 	private List<Pizza> pizze;
 

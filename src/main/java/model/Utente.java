@@ -10,7 +10,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
+@XmlRootElement(name = "utente")
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @Table(name = "utente")
 public class Utente {
@@ -26,6 +32,7 @@ public class Utente {
 	@Column(name = "password")
 	private String password;
 
+	@XmlTransient
 	@OneToMany(mappedBy = "utente", fetch = FetchType.EAGER)
 	private Set<Pizza> pizze;
 
