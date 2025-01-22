@@ -48,4 +48,14 @@
         <servlet-name>jerseyServlet</servlet-name>
         <url-pattern>/rest/*</url-pattern>
     </servlet-mapping>
+    
+    <listener>
+        <listener-class>
+            com.sun.xml.ws.transport.http.servlet.WSServletContextListener
+        </listener-class>
+    </listener>
+ 
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
 </web-app>
