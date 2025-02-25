@@ -3,8 +3,8 @@ package servlet;
 import java.io.IOException;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,10 +14,12 @@ import model.Impasto;
 import model.Ingrediente;
 import model.Utente;
 
-@WebServlet("/DashboardServlet")
 public class DashboardServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+
+	@EJB
+	private DAO DAO;
 
 	public DashboardServlet() {
 		super();
@@ -41,9 +43,9 @@ public class DashboardServlet extends HttpServlet {
 		if (ingredientiSelezionati != null && impastoSelezionato != null) {
 			DAO.creaPizza(utente.getId(), nomePizza, Long.parseLong(impastoSelezionato), ingredientiSelezionati);
 		}
-		
+
 		String pizzaDelete = request.getParameter("cancellaPizza");
-		if(pizzaDelete != null) {
+		if (pizzaDelete != null) {
 			DAO.rimuoviPizza(Long.parseLong(pizzaDelete));
 		}
 

@@ -19,7 +19,7 @@ List<Impasto> impasti = (List<Impasto>) request.getAttribute("impasti");
 		<%=utente.getUsername()%>
 	</h1>
 
-	<form action="./DashboardServlet" method="post">
+	<form action="./dashboard" method="post">
 		<div style="display: flex; padding: 10px;">
 			<table border="1" style="margin-right: 20px;">
 				<tr>
@@ -93,11 +93,11 @@ List<Impasto> impasti = (List<Impasto>) request.getAttribute("impasti");
 				<td><%=pizza.getImpasto().getNome()%></td>
 				<td><%=pizza.stampaIngredienti()%></td>
 				<td>
-					<form action="./UpdateServlet" method="post" style="display: inline-block;">
+					<form action="./update" method="post" style="display: inline-block;">
 						<input type="hidden" name="aggiornaPizza" value="<%=pizza.getId() %>">
 						<input type="submit" value="Update">
 					</form>
-					<form action="./DashboardServlet" method="post" style="display: inline-block;">
+					<form action="./dashboard" method="post" style="display: inline-block;">
 						<input type="hidden" name="cancellaPizza" value="<%=pizza.getId() %>">
 						<input type="submit" value="Delete">
 					</form>

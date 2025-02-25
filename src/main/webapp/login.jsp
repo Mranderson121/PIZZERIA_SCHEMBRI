@@ -21,12 +21,10 @@
 			%>
 			
 		<h1>Accedi</h1><br/>
-		<form action="./LoginServlet" method="post">
+		<form action="./login" method="post">
 			<input type="text" name="username"><br/>
 			<input type="password" name="password"><br/>
-			<input type="submit" value="Accedi">
-		
-			
+			<input type="submit" value="Accedi">			
 		</form>
 	</body>
 </html>

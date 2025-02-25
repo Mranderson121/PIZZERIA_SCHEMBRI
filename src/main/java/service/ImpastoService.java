@@ -2,6 +2,7 @@ package service;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -14,43 +15,44 @@ import javax.ws.rs.core.MediaType;
 
 import dao.DAO;
 import model.Impasto;
-import model.Ingrediente;
-
 
 @Path("/impasti")
 public class ImpastoService {
 
+	@EJB
+	private DAO DAO;
+
 	@GET
-	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<Impasto> getImpastiJSON(){
+	@Produces({ MediaType.APPLICATION_JSON})
+	public List<Impasto> getImpastiJSON() {
 		List<Impasto> impastiList = DAO.getImpasti();
 		return impastiList;
 	}
-	
+
 	@GET
 	@Path("/{id}")
-	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Produces({ MediaType.APPLICATION_JSON})
 	public Impasto getIngrediente(@PathParam("id") long id) {
 		return DAO.getImpastoById(id);
 	}
-	
+
 	@POST
-	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Consumes({ MediaType.APPLICATION_JSON})
+	@Produces({ MediaType.APPLICATION_JSON})
 	public void aggiungiImpasto(Impasto impasto) {
 		DAO.aggiungiImpasto(impasto);
 	}
-	
+
 	@PUT
 	@Path("/{id}")
-	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Produces({ MediaType.APPLICATION_JSON})
 	public void aggiornaImpasto(Impasto impasto) {
 		DAO.aggiornaImpasto(impasto);
 	}
-	
+
 	@DELETE
 	@Path("/{id}")
-	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Produces({ MediaType.APPLICATION_JSON})
 	public void rimuoviImpasto(@PathParam("id") long id) {
 		DAO.rimuoviImpasto(id);
 	}

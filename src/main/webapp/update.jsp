@@ -19,7 +19,7 @@ Pizza pizza = (Pizza) request.getAttribute("pizza");
 		Aggiorna la pizza
 	</h1>
 
-	<form action="./UpdateServlet" method="post">
+	<form action="./update" method="post">
 		<input type="hidden" name="aggiornaPizza" value="<%=pizza.getId() %>">
 		<div style="display: flex; padding: 10px; ">
 			<table border="1" style="margin-right: 20px;">
@@ -81,7 +81,7 @@ Pizza pizza = (Pizza) request.getAttribute("pizza");
 			</div>
 	</form>
 	
-	<form action="./DashboardServlet" method="post">
+	<form action="./dashboard" method="post">
 		<div style="margin-top: 20px;">
 			<input type="submit" value="Indietro">
 		</div>
